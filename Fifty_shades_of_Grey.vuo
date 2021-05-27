@@ -1,0 +1,35 @@
+/**
+ * @file
+ *
+ * @author wing
+ * @createdInVuoVersion 2.3.0
+ * @lastSavedInVuoVersion 2.3.0
+ * @copyright Copyright © 2021 wing
+ * @see This is a Vuo Composition source code file.  See https://vuo.org for further information.
+ */
+
+digraph G
+{
+BlendImageWithFeedback2 [type="vuo.image.feedback" version="1.1.0" label="Blend Image with Feedback|<refresh>refresh\l|<image>image\l|<imageTransform>imageTransform\l|<feedbackTransform>feedbackTransform\l|<feedbackOpacity>feedbackOpacity\l|<feedbackBlendMode>feedbackBlendMode\l|<pixelAligned>pixelAligned\l|<imageInForeground>imageInForeground\l|<width>width\l|<height>height\l|<colorDepth>colorDepth\l|<feedbackImage>feedbackImage\r" pos="615,-165" _feedbackOpacity="1.0" _feedbackBlendMode="\"normal\"" _pixelAligned="false" _imageInForeground="true" _width="0" _height="0" _colorDepth="\"8bpc\""];
+Count2 [type="vuo.math.count.VuoReal" version="1.0.0" label="Count|<refresh>refresh\l|<increment>increment\l|<decrement>decrement\l|<setCount>setCount\l|<count>count\r" pos="150,45" _increment="0.02" _decrement="1.0" _setCount="0.0"];
+Curve4 [type="vuo.motion.curve.VuoPoint2d" version="2.0.0" label="Curve|<refresh>refresh\l|<time>time\l|<startPosition>startPosition\l|<endPosition>endPosition\l|<duration>duration\l|<curve>curve\l|<easing>easing\l|<loop>loop\l|<phase>phase\l|<value>value\r" pos="345,45" _startPosition="\{\"x\":-1.0,\"y\":0.0\}" _endPosition="\{\"x\":1.0,\"y\":1.0\}" _duration="1." _curve="\"linear\"" _easing="\"in\"" _loop="\"none\"" _phase="0.0"];
+Curve5 [type="vuo.motion.curve.VuoReal" version="2.0.0" label="Curve|<refresh>refresh\l|<time>time\l|<startPosition>startPosition\l|<endPosition>endPosition\l|<duration>duration\l|<curve>curve\l|<easing>easing\l|<loop>loop\l|<phase>phase\l|<value>value\r" pos="345,210" _endPosition="1." _duration="1." _curve="\"linear\"" _easing="\"in\"" _loop="\"none\"" _phase="0.0"];
+FireOnDisplayRefresh2 [type="vuo.event.fireOnDisplayRefresh" version="1.0.0" label="Fire on Display Refresh|<refresh>refresh\l|<requestedFrame>requestedFrame\r" pos="-75,45" _requestedFrame_eventThrottling="drop"];
+FireOnStart [type="vuo.event.fireOnStart" version="1.0.0" label="Fire on Start|<refresh>refresh\l|<started>started\r" pos="-75,-195" _started_eventThrottling="enqueue"];
+MakeList3 [type="vuo.list.make.2.VuoLayer" version="2.0.0" label="Make List|<refresh>refresh\l|<1>1\l|<2>2\l|<list>list\r" pos="313,-154"];
+MakeRGBColor2 [type="vuo.color.make.rgb" version="2.0.0" label="Make RGB Color|<refresh>refresh\l|<red>red\l|<green>green\l|<blue>blue\l|<opacity>opacity\l|<color>color\r" pos="525,210" _red="1.0" _green="1.0" _blue="1.0"];
+MakeRectangleLayer3 [type="vuo.layer.make.rect" version="1.0.0" label="Make Rectangle Layer|<refresh>refresh\l|<color>color\l|<anchor>anchor\l|<center>center\l|<rotation>rotation\l|<width>width\l|<height>height\l|<sharpness>sharpness\l|<roundness>roundness\l|<opacity>opacity\l|<layer>layer\r" pos="120,-165" _anchor="\{\"horizontalAlignment\":\"center\",\"verticalAlignment\":\"center\"\}" _rotation="0.0" _width="0.040000000000000001" _height="768.0" _sharpness="1.0" _roundness="0.0" _opacity="1.0"];
+RenderImageToWindow3 [type="vuo.image.render.window2" version="4.0.0" label="Render Image to Window|<refresh>refresh\l|<image>image\l|<setWindowDescription>setWindowDescription\l|<updatedWindow>updatedWindow\r" pos="645,75" _updatedWindow_eventThrottling="enqueue"];
+RenderLayersToImage3 [type="vuo.layer.render.image2" version="2.0.0" label="Render Layers to Image|<refresh>refresh\l|<layers>layers\l|<width>width\l|<height>height\l|<colorDepth>colorDepth\l|<multisampling>multisampling\l|<image>image\r" pos="375,-165" _width="1024" _height="768" _colorDepth="\"8bpc\"" _multisampling="\"off\""];
+
+BlendImageWithFeedback2:feedbackImage -> RenderImageToWindow3:image;
+Count2:count -> Curve4:time;
+Count2:count -> Curve5:time;
+Curve4:value -> MakeRectangleLayer3:center;
+Curve5:value -> MakeRGBColor2:opacity;
+FireOnDisplayRefresh2:requestedFrame -> Count2:increment [event=true];
+MakeList3:list -> RenderLayersToImage3:layers;
+MakeRGBColor2:color -> MakeRectangleLayer3:color;
+MakeRectangleLayer3:layer -> MakeList3:1;
+RenderLayersToImage3:image -> BlendImageWithFeedback2:image;
+}
